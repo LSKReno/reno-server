@@ -36,7 +36,6 @@ module.exports = async function (req, res, filePath) {
     const contentTypes = mime(filePath)
 
     if (stats.isFile()) {
-      res.statusCode = 200
       res.setHeader('Content-Type', contentTypes)
       let fileReadStream
       const {
@@ -45,9 +44,14 @@ module.exports = async function (req, res, filePath) {
         end
       } = range(stats.size, req, res)
       if (code === 200) {
+        res.statusCode = 200
         fs.createReadStream(filePath)
       } else {
-        fs.createReadStream(filePath, { start, end })
+        res.statusCode = 216 // 216说明只是部分内容
+        fs.createReadStream(filePath, {
+          start,
+          end
+        })
       }
 
       if (filePath.match(config.compress)) {
