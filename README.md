@@ -1,2 +1,2 @@
 # reno-server
-A HTTP server
+A Static Web server
