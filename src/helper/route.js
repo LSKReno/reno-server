@@ -47,7 +47,7 @@ module.exports = async function (req, res, filePath) {
         res.statusCode = 200
         fs.createReadStream(filePath)
       } else {
-        res.statusCode = 216 // 216说明只是部分内容
+        res.statusCode = 206 // 206说明只是部分内容
         fs.createReadStream(filePath, {
           start,
           end
