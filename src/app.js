@@ -3,6 +3,7 @@ const http = require('http')
 const path = require('path')
 const conf = require('./config/defaultConfig')
 const router = require('./helper/route')
+// const openUrl = require('./helper/openUrl')
 
 class Server {
   constructor (config) {
@@ -16,7 +17,9 @@ class Server {
     })
 
     app.listen(this.conf.port, this.conf.host, () => {
-      console.info(`${chalk.green(`\nReno Server 启动成功: http://${this.conf.host}:${this.conf.port}`)}\n`)
+      const addr = `http://${this.conf.host}:${this.conf.port}`
+      console.info(`${chalk.green(`\nReno Server 启动成功: ${addr}`)}\n`)
+      // openUrl(addr)
     })
   }
 }
