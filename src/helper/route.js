@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const handlebars = require('handlebars')
 const promisify = require('util').promisify
-const config = require('../config/defaultConfig')
 const mime = require('../helper/mime')
 const compress = require('../helper/compress')
 const range = require('../helper/range')
@@ -15,7 +14,7 @@ const tplPath = path.join(__dirname, '../template/dir.tpl')
 const source = fs.readFileSync(tplPath)
 const template = handlebars.compile(source.toString())
 
-async function handleDir (res, filePath) {
+async function handleDir (res, filePath, config) {
   try {
     const files = await readdir(filePath)
     const dir = path.relative(config.root, filePath)
@@ -31,7 +30,7 @@ async function handleDir (res, filePath) {
   }
 }
 
-module.exports = async function (req, res, filePath) {
+module.exports = async function (req, res, filePath, config) {
   try {
     const stats = await stat(filePath)
     const contentTypes = mime(filePath)
@@ -70,7 +69,7 @@ module.exports = async function (req, res, filePath) {
     } else if (stats.isDirectory()) { // 文件夹
       res.statusCode = 200
       res.setHeader('Content-Type', 'text/html')
-      handleDir(res, filePath)
+      handleDir(res, filePath, config)
     }
   } catch (error) {
     // console.error(`${error}`)

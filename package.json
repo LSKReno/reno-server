@@ -2,7 +2,10 @@
   "name": "reno-server",
   "version": "0.1.0",
   "description": "a http server to handle static resource",
-  "main": "index.js",
+  "main": "src/app.js",
+  "bin": {
+    "reno-server": "bin/reno-server"
+  },
   "scripts": {
     "lint:fix": "eslint --fix .",
     "lint": "eslint . ",
@@ -28,7 +31,8 @@
   "homepage": "https://github.com/LSKReno/reno-server#readme",
   "dependencies": {
     "chalk": "^4.1.0",
-    "handlebars": "^4.7.6"
+    "handlebars": "^4.7.6",
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
